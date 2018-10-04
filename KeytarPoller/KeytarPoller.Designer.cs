@@ -28,31 +28,23 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.button1 = new System.Windows.Forms.Button();
-      this.comboBox1 = new System.Windows.Forms.ComboBox();
+      this.midiDevices = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.baseNoteLabel = new System.Windows.Forms.Label();
+      this.controllers = new System.Windows.Forms.ComboBox();
+      this.label3 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
-      // button1
+      // midiDevices
       // 
-      this.button1.Location = new System.Drawing.Point(12, 12);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(75, 23);
-      this.button1.TabIndex = 1;
-      this.button1.Text = "Start Polling";
-      this.button1.UseVisualStyleBackColor = true;
-      this.button1.Click += new System.EventHandler(this.button1_Click);
-      // 
-      // comboBox1
-      // 
-      this.comboBox1.FormattingEnabled = true;
-      this.comboBox1.Location = new System.Drawing.Point(296, 13);
-      this.comboBox1.Name = "comboBox1";
-      this.comboBox1.Size = new System.Drawing.Size(253, 21);
-      this.comboBox1.TabIndex = 2;
-      this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+      this.midiDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.midiDevices.FormattingEnabled = true;
+      this.midiDevices.Location = new System.Drawing.Point(296, 13);
+      this.midiDevices.Name = "midiDevices";
+      this.midiDevices.Size = new System.Drawing.Size(253, 21);
+      this.midiDevices.TabIndex = 2;
+      this.midiDevices.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
       // 
       // label1
       // 
@@ -72,25 +64,45 @@
       this.label2.TabIndex = 4;
       this.label2.Text = "Base Note:";
       // 
-      // label3
+      // baseNoteLabel
       // 
       this.baseNoteLabel.AutoSize = true;
       this.baseNoteLabel.Location = new System.Drawing.Point(79, 42);
-      this.baseNoteLabel.Name = "label3";
+      this.baseNoteLabel.Name = "baseNoteLabel";
       this.baseNoteLabel.Size = new System.Drawing.Size(20, 13);
       this.baseNoteLabel.TabIndex = 5;
       this.baseNoteLabel.Text = "C4";
+      // 
+      // controllers
+      // 
+      this.controllers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.controllers.FormattingEnabled = true;
+      this.controllers.Location = new System.Drawing.Point(72, 13);
+      this.controllers.Name = "controllers";
+      this.controllers.Size = new System.Drawing.Size(52, 21);
+      this.controllers.TabIndex = 6;
+      this.controllers.SelectedIndexChanged += new System.EventHandler(this.controllers_SelectedIndexChanged);
+      // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Location = new System.Drawing.Point(13, 16);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(54, 13);
+      this.label3.TabIndex = 7;
+      this.label3.Text = "Controller:";
       // 
       // KeytarPoller
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(566, 92);
+      this.Controls.Add(this.label3);
+      this.Controls.Add(this.controllers);
       this.Controls.Add(this.baseNoteLabel);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
-      this.Controls.Add(this.comboBox1);
-      this.Controls.Add(this.button1);
+      this.Controls.Add(this.midiDevices);
       this.Name = "KeytarPoller";
       this.ShowIcon = false;
       this.Text = "KeytarPoller";
@@ -101,11 +113,12 @@
     }
 
     #endregion
-    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.ComboBox comboBox1;
+    private System.Windows.Forms.ComboBox midiDevices;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label baseNoteLabel;
+    private System.Windows.Forms.ComboBox controllers;
+    private System.Windows.Forms.Label label3;
   }
 }
 

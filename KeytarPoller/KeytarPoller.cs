@@ -21,23 +21,18 @@ namespace KeytarPoller
       keyState = new bool[25];
       foreach(var device in Midi.Devices.DeviceManager.OutputDevices)
       {
-        comboBox1.Items.Add(device.Name);
+        midiDevices.Items.Add(device.Name);
       }
-      //for (uint i = 0; i < XInput.XUSER_MAX_COUNT; i++)
-      //{
-      //    var caps = new XInput.XINPUT_CAPABILITIES();
-      //    if(0 == XInput.XInputGetCapabilities(i, 1, ref caps))
-      //      textBox1.AppendText($"Type: {caps.Type} Subtype: {caps.SubType} Flags: {caps.Flags}" + Environment.NewLine);
-      //}
-    }
-
-    private void button1_Click(object sender, EventArgs e)
-    {
-      
-      if(mon == null)
+      for (uint i = 0; i < XInput.XUSER_MAX_COUNT; i++)
       {
-        mon = new ControllerMonitor(0);
-        mon.OnStateChanged += Mon_OnStateChanged;
+        var caps = new XInput.XINPUT_CAPABILITIES();
+        if(0 == XInput.XInputGetCapabilities(i, 1, ref caps))
+        {
+          if(caps.SubType == 15)
+          {
+            controllers.Items.Add(i);
+          }
+        }
       }
     }
 
@@ -103,8 +98,18 @@ namespace KeytarPoller
     private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
       device?.Close();
-      device = Midi.Devices.DeviceManager.OutputDevices.Where((d) => d.Name.Equals(comboBox1.SelectedItem)).First();
-      device.Open();
+      device = Midi.Devices.DeviceManager.OutputDevices.Where((d) => d.Name.Equals(midiDevices.SelectedItem)).First();
+      device?.Open();
+    }
+
+    private void controllers_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      if (mon != null)
+      {
+        mon.Dispose();
+      }
+      mon = new ControllerMonitor((uint)controllers.SelectedItem);
+      mon.OnStateChanged += Mon_OnStateChanged;
     }
   }
 }
