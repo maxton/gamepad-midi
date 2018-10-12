@@ -11,9 +11,9 @@ namespace KeytarPoller
     private uint controllerIndex;
     private bool cancel;
 
-    private XInput.XINPUT_GAMEPAD lastState;
+    private XInput.XINPUT_GAMEPAD_EX lastState;
 
-    public delegate void ControllerEvent(XInput.XINPUT_GAMEPAD state);
+    public delegate void ControllerEvent(XInput.XINPUT_GAMEPAD_EX state);
     public event ControllerEvent OnStateChanged;
 
     public delegate void DisconnectEvent();
@@ -21,8 +21,8 @@ namespace KeytarPoller
 
     public ControllerMonitor(uint controllerIdx)
     {
-      var state = new XInput.XINPUT_STATE();
-      if (0 != XInput.XInputGetState(controllerIdx, ref state))
+      var state = new XInput.XINPUT_STATE_EX();
+      if (0 != XInput.XInputGetStateEx(controllerIdx, ref state))
       {
         throw new Exception($"Controller {controllerIdx} is not connected");
       }
@@ -39,8 +39,8 @@ namespace KeytarPoller
       var sleepTime = TimeSpan.FromMilliseconds(0.5);
       while (!cancel)
       {
-        var state = new XInput.XINPUT_STATE();
-        if (0 != XInput.XInputGetState(controllerIndex, ref state))
+        var state = new XInput.XINPUT_STATE_EX();
+        if (0 != XInput.XInputGetStateEx(controllerIndex, ref state))
         {
           OnDisconnect?.Invoke();
           return;
