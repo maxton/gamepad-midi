@@ -10,7 +10,7 @@ Use the left and right D-pad controlls to switch octaves.
 
 No velocity support or touchpad support, yet.
 
-![image](https://user-images.githubusercontent.com/1944608/46449759-c5d7b680-c75b-11e8-9c8e-cabc8da81bdb.png)
+![screenshot](https://i.imgur.com/OO9ioMC.png)
 
 
 ## Build Status / Download
