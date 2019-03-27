@@ -1,8 +1,17 @@
 # Keytar Poller
 
-It reads input from your Xbox 360 keytar over the Xbox controller protocol so you can use your keytar wirelessly.
+Use your Rock Band 3 Keytar as a MIDI controller - wirelessly!
+Connect a controller, start the program, select the controller index (0 to 3)
+and the output MIDI device and start shredding.
 
-MIDI data is sent to the chosen device. Use a loopback midi device to route it into a DAW or something.
+I suggest installing [LoopBe1](https://www.nerds.de/en/download.html) if you want to use this as a midi controller for e.g. a DAW.
+
+Use the left and right D-pad controlls to switch octaves.
+
+No velocity support or touchpad support, yet.
+
+![image](https://user-images.githubusercontent.com/1944608/46449759-c5d7b680-c75b-11e8-9c8e-cabc8da81bdb.png)
+
 
 ## Build Status / Download
 
