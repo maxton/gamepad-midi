@@ -12,7 +12,8 @@ namespace KeytarPoller
   {
     private ControllerMonitor mon;
     private Midi.Devices.IOutputDevice device;
-    private bool[] keyState;
+    private byte[] keyState;
+    private byte[] velocityState;
     private bool sustainState;
 
     private int offset = 60;
@@ -20,7 +21,8 @@ namespace KeytarPoller
     public KeytarPoller()
     {
       InitializeComponent();
-      keyState = new bool[25];
+      keyState = new byte[25];
+      velocityState = new byte[25];
       foreach(var device in Midi.Devices.DeviceManager.OutputDevices)
       {
         midiDevices.Items.Add(device.Name);
@@ -40,7 +42,7 @@ namespace KeytarPoller
 
     private void Mon_OnStateChanged(XInput.XINPUT_GAMEPAD_EX state)
     {
-      var (keys, sustain, _) = GamepadToKeyState(state);
+      var (keys, sustain, velocities) = GamepadToKeyState(state);
       if(state.wButtons.HasFlag(XInput.Buttons.DPAD_LEFT))
       {
         offset = Math.Max(offset - 12, 0);
@@ -50,8 +52,7 @@ namespace KeytarPoller
         offset = Math.Min(offset + 12, 127);
         baseNoteLabel.Text = Enum.GetName(typeof(Midi.Enums.Pitch), (Midi.Enums.Pitch)offset);
       }
-      SendMessages(keys, sustain);
-      keyState = keys;
+      SendMessages(keys, sustain, velocities);
       sustainState = sustain;
     }
 
@@ -85,28 +86,48 @@ namespace KeytarPoller
         int mask = test >> i;
         keys[key++] = (appended & mask) == mask;
       }
-
-      // Console.WriteLine(
-      //   $"Keys: {Convert.ToString(appended, 2).PadLeft(25, '0')} " +
-      //   $"Sustain: {(sustain ? 1 : 0)} " +
-      //   $"Velocities: {velocities.Select(x => x.ToString().PadLeft(3)).Aggregate((x, y) => x + " " + y)} " +
-      //   $"State: {(int)state.wButtons:X4}");
-
+#if DEBUG
+      Console.WriteLine(
+        $"Keys: {Convert.ToString(appended, 2).PadLeft(25, '0')} " +
+        $"Sustain: {(sustain ? 1 : 0)} " +
+        $"Velocities: {velocities.Select(x => x.ToString().PadLeft(3)).Aggregate((x, y) => x + " " + y)} " +
+        $"State: {(int)state.wButtons:X4}");
+#endif
       return (keys, sustain, velocities);
     }
 
-    void SendMessages(bool[] newKeys, bool sustain)
+    void SendMessages(bool[] newKeys, bool sustain, byte[] velocities)
     {
       if (device == null) return;
-
       var channel = Midi.Enums.Channel.Channel1;
+      int newVelocityStart = 0;
+      int finalVelocity = 0;
+      for (int i = 0; i < 5; i++)
+      {
+        if(velocities[i] != 0)
+        {
+          finalVelocity = i;
+          if (velocityState[i] == velocities[i])
+          {
+            newVelocityStart = i + 1;
+          }
+        }
+        velocityState[i] = velocities[i];
+      }
       for (int i = 0; i < 25; i++)
       {
         var pitch = (Midi.Enums.Pitch)(i + offset);
-        if (newKeys[i] && !keyState[i])
-          device.SendNoteOn(channel, pitch, 64);
-        else if (!newKeys[i] && keyState[i])
+        if (newKeys[i] && (0 == keyState[i]))
+        {
+          device.SendNoteOn(channel, pitch, velocities[Math.Min(newVelocityStart, finalVelocity)]);
+          keyState[i] = velocities[Math.Min(newVelocityStart, finalVelocity)];
+          newVelocityStart++;
+        }
+        else if (!newKeys[i] && (0 != keyState[i]))
+        {
           device.SendNoteOff(channel, pitch, 0);
+          keyState[i] = 0;
+        }
       }
       if (sustain && !sustainState)
         device.SendControlChange(channel, Midi.Enums.Control.SustainPedal, 127);
@@ -129,6 +150,9 @@ namespace KeytarPoller
       }
       mon = new ControllerMonitor((uint)controllers.SelectedItem);
       mon.OnStateChanged += Mon_OnStateChanged;
+      XInput.XINPUT_BATTERY_INFORMATION xbi = default;
+      XInput.XInputGetBatteryInformation((uint)controllers.SelectedItem, XInput.BATTERY_DEVTYPE.GAMEPAD, ref xbi);
+      label4.Text = $"Battery: {xbi.BatteryType} {xbi.BatteryLevel}";
     }
   }
 }

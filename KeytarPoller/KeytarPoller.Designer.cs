@@ -34,13 +34,14 @@
       this.baseNoteLabel = new System.Windows.Forms.Label();
       this.controllers = new System.Windows.Forms.ComboBox();
       this.label3 = new System.Windows.Forms.Label();
+      this.label4 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // midiDevices
       // 
       this.midiDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.midiDevices.FormattingEnabled = true;
-      this.midiDevices.Location = new System.Drawing.Point(97, 35);
+      this.midiDevices.Location = new System.Drawing.Point(90, 35);
       this.midiDevices.Name = "midiDevices";
       this.midiDevices.Size = new System.Drawing.Size(175, 21);
       this.midiDevices.TabIndex = 2;
@@ -49,7 +50,7 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(9, 38);
+      this.label1.Location = new System.Drawing.Point(2, 38);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(79, 13);
       this.label1.TabIndex = 3;
@@ -59,7 +60,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(28, 61);
+      this.label2.Location = new System.Drawing.Point(21, 61);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(60, 13);
       this.label2.TabIndex = 4;
@@ -69,7 +70,7 @@
       // baseNoteLabel
       // 
       this.baseNoteLabel.AutoSize = true;
-      this.baseNoteLabel.Location = new System.Drawing.Point(94, 61);
+      this.baseNoteLabel.Location = new System.Drawing.Point(87, 61);
       this.baseNoteLabel.Name = "baseNoteLabel";
       this.baseNoteLabel.Size = new System.Drawing.Size(20, 13);
       this.baseNoteLabel.TabIndex = 5;
@@ -79,7 +80,7 @@
       // 
       this.controllers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.controllers.FormattingEnabled = true;
-      this.controllers.Location = new System.Drawing.Point(97, 8);
+      this.controllers.Location = new System.Drawing.Point(90, 8);
       this.controllers.Name = "controllers";
       this.controllers.Size = new System.Drawing.Size(52, 21);
       this.controllers.TabIndex = 6;
@@ -88,18 +89,27 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(34, 11);
+      this.label3.Location = new System.Drawing.Point(27, 11);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(54, 13);
       this.label3.TabIndex = 7;
       this.label3.Text = "Controller:";
       this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
       // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(147, 11);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(0, 13);
+      this.label4.TabIndex = 8;
+      // 
       // KeytarPoller
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(280, 77);
+      this.ClientSize = new System.Drawing.Size(284, 81);
+      this.Controls.Add(this.label4);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.controllers);
       this.Controls.Add(this.baseNoteLabel);
@@ -127,6 +137,7 @@
     private System.Windows.Forms.Label baseNoteLabel;
     private System.Windows.Forms.ComboBox controllers;
     private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label4;
   }
 }
 

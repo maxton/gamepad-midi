@@ -8,7 +8,7 @@ I suggest installing [LoopBe1](https://www.nerds.de/en/download.html) if you wan
 
 Use the left and right D-pad controlls to switch octaves.
 
-No velocity support or touchpad support, yet.
+No touchpad support, yet. I can't find touchpad data in any of the Xinput structs.
 
 ![screenshot](https://i.imgur.com/OO9ioMC.png)
 

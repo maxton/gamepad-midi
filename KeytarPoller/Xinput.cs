@@ -86,10 +86,30 @@ namespace KeytarPoller
 
     public struct XINPUT_BATTERY_INFORMATION
     {
-      public byte BatteryType;
-      public byte BatteryLevel;
+      public BATTERY_TYPE BatteryType;
+      public BATTERY_LEVEL BatteryLevel;
     };
 
+    public enum BATTERY_DEVTYPE : byte
+    {
+      GAMEPAD = 0,
+      HEADSET = 1,
+    }
+    public enum BATTERY_TYPE : byte
+    {
+      DISCONNECTED = 0,
+      WIRED = 1,
+      ALKALINE = 2,
+      NIMH = 3,
+      UNKNOWN = 0xFF
+    }
+    public enum BATTERY_LEVEL : byte
+    {
+      EMPTY = 0,
+      LOW = 1,
+      MEDIUM = 2,
+      FULL = 3,
+    }
     [DllImport("xinput1_4")]
     public static extern uint XInputGetState(uint dwUserIndex, ref XINPUT_STATE pState);
     [DllImport("xinput1_4", EntryPoint = "#100")]
@@ -99,6 +119,12 @@ namespace KeytarPoller
       uint dwUserIndex,   // Index of the gamer associated with the device
       uint dwFlags,       // Input flags that identify the device type
       ref XINPUT_CAPABILITIES pCapabilities  // Receives the capabilities
+    );
+    [DllImport("xinput1_4")]
+    public static extern uint XInputGetBatteryInformation(
+      uint dwUserIndex,  // Index of the gamer associated with the device
+      BATTERY_DEVTYPE devType,      // A BATTERY_DEVTYPE
+      ref XINPUT_BATTERY_INFORMATION pBatteryInformation // Battery status
     );
   }
 }
