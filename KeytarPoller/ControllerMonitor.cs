@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 
-namespace KeytarPoller
+namespace LibPlasticInstrument
 {
 
   public class ControllerMonitor : IDisposable

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeytarPoller", "KeytarPoller\KeytarPoller.csproj", "{5A99C27B-6784-4392-BEDA-BFBC00E7CD96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrumPoller", "DrumPoller\DrumPoller.csproj", "{C82DEFDB-488E-4FAE-B902-9283C2F33D23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5A99C27B-6784-4392-BEDA-BFBC00E7CD96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A99C27B-6784-4392-BEDA-BFBC00E7CD96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A99C27B-6784-4392-BEDA-BFBC00E7CD96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

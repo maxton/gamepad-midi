@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace KeytarPoller
+namespace LibPlasticInstrument
 {
   public static class XInput
   {
@@ -50,6 +50,17 @@ namespace KeytarPoller
       public short sThumbRX;
       public short sThumbRY;
       public uint dwUnknown;
+      public void Print()
+      {
+        Console.WriteLine($"wButtons      {wButtons}");
+        Console.WriteLine($"bLeftTrigger  {bLeftTrigger:X2}");
+        Console.WriteLine($"bRightTrigger {bRightTrigger:X2}");
+        Console.WriteLine($"sThumbLX      {sThumbLX:X4}");
+        Console.WriteLine($"sThumbLY      {sThumbLY:X4}");
+        Console.WriteLine($"sThumbRX      {sThumbRX:X4}");
+        Console.WriteLine($"sThumbRY      {sThumbRY:X4}");
+        Console.WriteLine($"dwUnknown     {dwUnknown:X8}");
+      }
     };
 
 

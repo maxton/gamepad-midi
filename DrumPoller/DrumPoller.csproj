@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5A99C27B-6784-4392-BEDA-BFBC00E7CD96}</ProjectGuid>
+    <ProjectGuid>{C82DEFDB-488E-4FAE-B902-9283C2F33D23}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>KeytarPoller</RootNamespace>
-    <AssemblyName>KeytarPoller</AssemblyName>
+    <RootNamespace>DrumPoller</RootNamespace>
+    <AssemblyName>DrumPoller</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,7 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Midi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -52,19 +49,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControllerEnumerator.cs" />
-    <Compile Include="ControllerMonitor.cs" />
-    <Compile Include="KeytarPoller.cs">
+    <Compile Include="..\KeytarPoller\ControllerEnumerator.cs">
+      <Link>ControllerEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\KeytarPoller\ControllerMonitor.cs">
+      <Link>ControllerMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\KeytarPoller\Xinput.cs">
+      <Link>Xinput.cs</Link>
+    </Compile>
+    <Compile Include="DrumPoller.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KeytarPoller.Designer.cs">
-      <DependentUpon>KeytarPoller.cs</DependentUpon>
+    <Compile Include="DrumPoller.Designer.cs">
+      <DependentUpon>DrumPoller.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xinput.cs" />
-    <EmbeddedResource Include="KeytarPoller.resx">
-      <DependentUpon>KeytarPoller.cs</DependentUpon>
+    <EmbeddedResource Include="DrumPoller.resx">
+      <DependentUpon>DrumPoller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -74,7 +77,6 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
