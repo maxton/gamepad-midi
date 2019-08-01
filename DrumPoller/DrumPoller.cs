@@ -163,7 +163,6 @@ namespace DrumPoller
     };
     void SendMessages(Drums newState, XInput.XINPUT_GAMEPAD_EX state)
     {
-      Console.WriteLine($"{state.sThumbLX} {state.sThumbLY} {state.sThumbRX} {state.sThumbRY}");
       if (device == null) return;
       var channel = Midi.Enums.Channel.Channel10;
       foreach(Drums d in Enum.GetValues(typeof(Drums)))
