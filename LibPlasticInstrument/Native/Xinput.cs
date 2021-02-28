@@ -27,7 +27,7 @@ namespace LibPlasticInstrument
     };
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XINPUT_GAMEPAD
+    public struct Gamepad
     {
       public Buttons wButtons;
       public byte bLeftTrigger;
@@ -40,7 +40,7 @@ namespace LibPlasticInstrument
 
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XINPUT_GAMEPAD_EX
+    public struct GamepadEx
     {
       public Buttons wButtons;
       public byte bLeftTrigger;
@@ -65,77 +65,101 @@ namespace LibPlasticInstrument
 
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XINPUT_STATE
+    public struct State
     {
       public uint dwPacketNumber;
-      public XINPUT_GAMEPAD Gamepad;
+      public Gamepad Gamepad;
     };
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XINPUT_STATE_EX
+    public struct StateEx
     {
       public uint dwPacketNumber;
-      public XINPUT_GAMEPAD_EX Gamepad;
+      public GamepadEx Gamepad;
     };
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XINPUT_VIBRATION
+    public struct Vibration
     {
       public ushort wLeftMotorSpeed;
       public ushort wRightMotorSpeed;
     };
 
+    public enum DevSubType : byte
+    {
+      Unknown = 0,
+      Gamepad = 1,
+      Wheel = 2,
+      ArcadeStick = 3,
+      FlightStick = 4,
+      DancePad = 5,
+      Guitar = 6,
+      GuitarAlternate = 7,
+      DrumKit = 8,
+      UNK_9 = 9,
+      UNK_10 = 10,
+      GuitarBass = 11,
+      UNK_12 = 12,
+      UNK_13 = 13,
+      UNK_14 = 14,
+      Keytar = 15,
+      UNK_16 = 16, 
+      UNK_17 = 17,
+      UNK_18 = 18,
+      ArcadePad = 19
+    }
+
     [StructLayout(LayoutKind.Sequential)]
-    public struct XINPUT_CAPABILITIES
+    public struct Capabilities
     {
       public byte Type;
-      public byte SubType;
+      public DevSubType SubType;
       public ushort Flags;
-      public XINPUT_GAMEPAD Gamepad;
-      public XINPUT_VIBRATION Vibration;
+      public Gamepad Gamepad;
+      public Vibration Vibration;
     };
 
-    public struct XINPUT_BATTERY_INFORMATION
+    public struct BatteryInformation
     {
-      public BATTERY_TYPE BatteryType;
-      public BATTERY_LEVEL BatteryLevel;
+      public BatteryType BatteryType;
+      public BatteryLevel BatteryLevel;
     };
 
-    public enum BATTERY_DEVTYPE : byte
+    public enum BatteryDevType : byte
     {
-      GAMEPAD = 0,
-      HEADSET = 1,
+      Gamepad = 0,
+      Headset = 1,
     }
-    public enum BATTERY_TYPE : byte
+    public enum BatteryType : byte
     {
-      DISCONNECTED = 0,
-      WIRED = 1,
-      ALKALINE = 2,
-      NIMH = 3,
-      UNKNOWN = 0xFF
+      Disconnected = 0,
+      Wired = 1,
+      Alkaline = 2,
+      NiMH = 3,
+      Unknown = 0xFF
     }
-    public enum BATTERY_LEVEL : byte
+    public enum BatteryLevel : byte
     {
-      EMPTY = 0,
-      LOW = 1,
-      MEDIUM = 2,
-      FULL = 3,
+      Empty = 0,
+      Low = 1,
+      Medium = 2,
+      Full = 3,
     }
     [DllImport("xinput1_4")]
-    public static extern uint XInputGetState(uint dwUserIndex, ref XINPUT_STATE pState);
+    public static extern uint XInputGetState(uint dwUserIndex, ref State pState);
     [DllImport("xinput1_4", EntryPoint = "#100")]
-    public static extern uint XInputGetStateEx(uint dwUserIndex, ref XINPUT_STATE_EX pState);
+    public static extern uint XInputGetStateEx(uint dwUserIndex, ref StateEx pState);
     [DllImport("xinput1_4")]
     public static extern uint XInputGetCapabilities(
       uint dwUserIndex,   // Index of the gamer associated with the device
       uint dwFlags,       // Input flags that identify the device type
-      ref XINPUT_CAPABILITIES pCapabilities  // Receives the capabilities
+      ref Capabilities pCapabilities  // Receives the capabilities
     );
     [DllImport("xinput1_4")]
     public static extern uint XInputGetBatteryInformation(
       uint dwUserIndex,  // Index of the gamer associated with the device
-      BATTERY_DEVTYPE devType,      // A BATTERY_DEVTYPE
-      ref XINPUT_BATTERY_INFORMATION pBatteryInformation // Battery status
+      BatteryDevType devType,      // A BATTERY_DEVTYPE
+      ref BatteryInformation pBatteryInformation // Battery status
     );
   }
 }

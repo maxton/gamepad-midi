@@ -7,7 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeytarPoller", "KeytarPolle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrumPoller", "DrumPoller\DrumPoller.csproj", "{C82DEFDB-488E-4FAE-B902-9283C2F33D23}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LibPlasticInstrument", "LibPlasticInstrument\LibPlasticInstrument.shproj", "{329DEF6B-231E-4205-8B0E-BF240C72D130}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamepadMidi", "GamepadMidi\GamepadMidi.csproj", "{14582BE3-9193-4FF6-9D5B-7C6EA535366F}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		LibPlasticInstrument\LibPlasticInstrument.projitems*{14582be3-9193-4ff6-9d5b-7c6ea535366f}*SharedItemsImports = 4
+		LibPlasticInstrument\LibPlasticInstrument.projitems*{329def6b-231e-4205-8b0e-bf240c72d130}*SharedItemsImports = 13
+		LibPlasticInstrument\LibPlasticInstrument.projitems*{5a99c27b-6784-4392-beda-bfbc00e7cd96}*SharedItemsImports = 4
+		LibPlasticInstrument\LibPlasticInstrument.projitems*{c82defdb-488e-4fae-b902-9283c2f33d23}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -21,6 +31,10 @@ Global
 		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C82DEFDB-488E-4FAE-B902-9283C2F33D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14582BE3-9193-4FF6-9D5B-7C6EA535366F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14582BE3-9193-4FF6-9D5B-7C6EA535366F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14582BE3-9193-4FF6-9D5B-7C6EA535366F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14582BE3-9193-4FF6-9D5B-7C6EA535366F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

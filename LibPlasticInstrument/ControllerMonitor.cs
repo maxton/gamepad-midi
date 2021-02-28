@@ -4,33 +4,34 @@ using System.Threading;
 
 namespace LibPlasticInstrument
 {
-
   public class ControllerMonitor : IDisposable
   {
     private Thread thread;
     private uint controllerIndex;
     private bool cancel;
 
-    private XInput.XINPUT_GAMEPAD_EX lastState;
+    private XInput.GamepadEx lastState;
 
-    public delegate void ControllerEvent(XInput.XINPUT_GAMEPAD_EX state);
+    public delegate void ControllerEvent(XInput.GamepadEx state);
     public event ControllerEvent OnStateChanged;
 
     public delegate void DisconnectEvent();
     public event DisconnectEvent OnDisconnect;
 
-    public ControllerMonitor(uint controllerIdx)
+    public bool Connected { get; private set; }
+
+    public ControllerMonitor(Controller c)
     {
-      var state = new XInput.XINPUT_STATE_EX();
-      if (0 != XInput.XInputGetStateEx(controllerIdx, ref state))
+      var state = new XInput.StateEx();
+      if (0 != XInput.XInputGetStateEx(c.Index, ref state))
       {
-        throw new Exception($"Controller {controllerIdx} is not connected");
+        throw new Exception($"Controller {c.Index} is not connected");
       }
       lastState = state.Gamepad;
       cancel = false;
-      controllerIndex = controllerIdx;
-
-      thread = new Thread(PollThread);
+      controllerIndex = c.Index;
+      Connected = true;
+      thread = new Thread(PollThread) { Name = $"Controller {c.Index} poll thread" };
       thread.Start();
     }
 
@@ -39,11 +40,18 @@ namespace LibPlasticInstrument
       var sleepTime = TimeSpan.FromMilliseconds(0.5);
       while (!cancel)
       {
-        var state = new XInput.XINPUT_STATE_EX();
+        if (!Connected)
+        {
+          // Do less while waiting for the controller to come back online.
+          Thread.Sleep(250);
+          continue;
+        }
+        var state = new XInput.StateEx();
         if (0 != XInput.XInputGetStateEx(controllerIndex, ref state))
         {
-          OnDisconnect?.Invoke();
-          return;
+          Connected = false;
+          OnDisconnect?.ThreadSafeInvoke();
+          continue;
         }
         var gp = state.Gamepad;
         if (gp.bLeftTrigger != lastState.bLeftTrigger
@@ -55,19 +63,7 @@ namespace LibPlasticInstrument
             || gp.wButtons != lastState.wButtons)
         {
           lastState = gp;
-          // https://stackoverflow.com/a/1698918
-          foreach (Delegate d in OnStateChanged.GetInvocationList())
-          {
-            ISynchronizeInvoke syncer = d.Target as ISynchronizeInvoke;
-            if (syncer == null)
-            {
-              d.DynamicInvoke(lastState);
-            }
-            else
-            {
-              syncer.BeginInvoke(d, new object[] { lastState });  // cleanup omitted
-            }
-          }
+          OnStateChanged.ThreadSafeInvoke(lastState);
         }
         Thread.Sleep(sleepTime);
       }

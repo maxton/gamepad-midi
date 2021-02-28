@@ -50,15 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\KeytarPoller\ControllerEnumerator.cs">
-      <Link>ControllerEnumerator.cs</Link>
-    </Compile>
-    <Compile Include="..\KeytarPoller\ControllerMonitor.cs">
-      <Link>ControllerMonitor.cs</Link>
-    </Compile>
-    <Compile Include="..\KeytarPoller\Xinput.cs">
-      <Link>Xinput.cs</Link>
-    </Compile>
     <Compile Include="DrumPoller.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,5 +84,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <Import Project="..\LibPlasticInstrument\LibPlasticInstrument.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

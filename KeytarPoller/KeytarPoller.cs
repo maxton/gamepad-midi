@@ -27,20 +27,16 @@ namespace KeytarPoller
       {
         midiDevices.Items.Add(device.Name);
       }
-      for (uint i = 0; i < XInput.XUSER_MAX_COUNT; i++)
+      foreach (var device in ControllerEnumerator.EnumerateControllers())
       {
-        var caps = new XInput.XINPUT_CAPABILITIES();
-        if(0 == XInput.XInputGetCapabilities(i, 1, ref caps))
+        if (device.Capabilities.SubType == XInput.DevSubType.Keytar)
         {
-          if(caps.SubType == 15)
-          {
-            controllers.Items.Add(i);
-          }
+          controllers.Items.Add(device);
         }
       }
     }
 
-    private void Mon_OnStateChanged(XInput.XINPUT_GAMEPAD_EX state)
+    private void Mon_OnStateChanged(XInput.GamepadEx state)
     {
       var (keys, sustain, velocities) = GamepadToKeyState(state);
       if(state.wButtons.HasFlag(XInput.Buttons.DPAD_LEFT))
@@ -62,7 +58,7 @@ namespace KeytarPoller
       device?.Close();
     }
 
-    public static (bool[], bool, byte[]) GamepadToKeyState(XInput.XINPUT_GAMEPAD_EX state)
+    public static (bool[] keys, bool sustain, byte[] velocities) GamepadToKeyState(XInput.GamepadEx state)
     {
       bool sustain = (state.sThumbRY & 0x80) == 0x80;
       var velocities = new byte[] {
@@ -148,10 +144,11 @@ namespace KeytarPoller
       {
         mon.Dispose();
       }
-      mon = new ControllerMonitor((uint)controllers.SelectedItem);
+      var controller = controllers.SelectedItem as Controller;
+      mon = new ControllerMonitor(controller);
       mon.OnStateChanged += Mon_OnStateChanged;
-      XInput.XINPUT_BATTERY_INFORMATION xbi = default;
-      XInput.XInputGetBatteryInformation((uint)controllers.SelectedItem, XInput.BATTERY_DEVTYPE.GAMEPAD, ref xbi);
+      XInput.BatteryInformation xbi = default;
+      XInput.XInputGetBatteryInformation(controller.Index, XInput.BatteryDevType.Gamepad, ref xbi);
       label4.Text = $"Battery: {xbi.BatteryType} {xbi.BatteryLevel}";
     }
   }

@@ -19,7 +19,6 @@ namespace DrumPoller
     private ushort[] velocityState;
 
     private int offset = 60;
-    const byte subTypeDrumkit = 8;
 
     public DrumPoller()
     {
@@ -29,12 +28,11 @@ namespace DrumPoller
       {
         midiDevices.Items.Add(device.Name);
       }
-      var devices = ControllerEnumerator.EnumerateControllers();
-      for (int i = 0; i < devices.Count; i++)
+      foreach(var device in ControllerEnumerator.EnumerateControllers())
       {
-        if(devices[i].SubType == subTypeDrumkit)
+        if(device.Capabilities.SubType == XInput.DevSubType.DrumKit)
         {
-          controllers.Items.Add((uint)i);
+          controllers.Items.Add(device);
         }
       }
     }
@@ -52,10 +50,11 @@ namespace DrumPoller
       {
         mon.Dispose();
       }
-      mon = new ControllerMonitor((uint)controllers.SelectedItem);
+      var controller = controllers.SelectedItem as Controller;
+      mon = new ControllerMonitor(controller);
       mon.OnStateChanged += Mon_OnStateChanged;
-      XInput.XINPUT_BATTERY_INFORMATION xbi = default;
-      XInput.XInputGetBatteryInformation((uint)controllers.SelectedItem, XInput.BATTERY_DEVTYPE.GAMEPAD, ref xbi);
+      XInput.BatteryInformation xbi = default;
+      XInput.XInputGetBatteryInformation(controller.Index, XInput.BatteryDevType.Gamepad, ref xbi);
       label4.Text = $"Battery: {xbi.BatteryType} {xbi.BatteryLevel}";
     }
 
@@ -117,7 +116,7 @@ namespace DrumPoller
       }
       return flags;
     }
-    private void Mon_OnStateChanged(XInput.XINPUT_GAMEPAD_EX state)
+    private void Mon_OnStateChanged(XInput.GamepadEx state)
     {
       var drums = HitDrums(state.wButtons);
       SendMessages(drums, state);
@@ -150,7 +149,7 @@ namespace DrumPoller
       return (byte)((thumbData - min) / (max - min) * (bmax-bmin) + bmin);
     }
 
-    private Dictionary<Drums, Func<XInput.XINPUT_GAMEPAD_EX, byte>> VelocityFunctions = new Dictionary<Drums, Func<XInput.XINPUT_GAMEPAD_EX, byte>>
+    private Dictionary<Drums, Func<XInput.GamepadEx, byte>> VelocityFunctions = new Dictionary<Drums, Func<XInput.GamepadEx, byte>>
     {
       { Drums.Kick, x => 80 },
       { Drums.RedDrum, x =>      Interp(x.sThumbLX, rMin, rMax, 63, 127) },
@@ -161,7 +160,7 @@ namespace DrumPoller
       { Drums.BlueCymbal, x =>   Interp(x.sThumbRX, bMin, bMax, 63, 127) },
       { Drums.GreenCymbal, x =>  Interp(x.sThumbRY, gMin, gMax, 63, 127) },
     };
-    void SendMessages(Drums newState, XInput.XINPUT_GAMEPAD_EX state)
+    void SendMessages(Drums newState, XInput.GamepadEx state)
     {
       if (device == null) return;
       var channel = Midi.Enums.Channel.Channel10;

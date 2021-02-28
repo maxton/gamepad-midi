@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>329def6b-231e-4205-8b0e-bf240c72d130</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>LibPlasticInstrument</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controller.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ControllerEnumerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ControllerMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Translators\DrumTranslator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ITranslator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\JoystickApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Translators\KeytarTranslator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Xinput.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Native\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Translators\" />
+  </ItemGroup>
+</Project>
