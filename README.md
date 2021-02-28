@@ -20,4 +20,4 @@ The drums are output on MIDI channel 10. Currently the MIDI notes are fixed and 
 
 ## Build Status / Download
 
-Windows (.NET 4.7 exe): [![Windows](https://ci.appveyor.com/api/projects/status/3acux00e2hynqud3?svg=true)](https://ci.appveyor.com/project/maxton/keytar/build/artifacts)
+Windows (.NET 4.7 exe): [![Windows](https://ci.appveyor.com/api/projects/status/3acux00e2hynqud3?svg=true)](https://ci.appveyor.com/project/maxton/gamepad-midi/build/artifacts)
