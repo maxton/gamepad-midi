@@ -17,6 +17,7 @@ namespace GamepadMidi
     private Midi.Devices.IOutputDevice device;
     private KeytarTranslator keytarTranslator;
     private DrumTranslator drumTranslator;
+    private ProGuitarTranslator proGuitarTranslator;
 
     public MainWin()
     {
@@ -32,6 +33,11 @@ namespace GamepadMidi
       drumTranslator.OnNoteOff += Translator_OnNoteOff;
       drumTranslator.OnNoteOn += Translator_OnNoteOn;
       drumTranslator.OnControlChange += Translator_OnControlChange;
+
+      proGuitarTranslator = new ProGuitarTranslator();
+      proGuitarTranslator.OnNoteOff += Translator_OnNoteOff;
+      proGuitarTranslator.OnNoteOn += Translator_OnNoteOn;
+      proGuitarTranslator.OnControlChange += Translator_OnControlChange;
     }
 
     private void GamepadMidi_FormClosing(object sender, FormClosingEventArgs e)
@@ -63,6 +69,7 @@ namespace GamepadMidi
       batteryInfo.Text = "Disconnected";
       mon.OnStateChanged -= keytarTranslator.ControllerEventHandler;
       mon.OnStateChanged -= drumTranslator.ControllerEventHandler;
+      mon.OnStateChanged -= proGuitarTranslator.ControllerEventHandler;
       mon.Dispose();
       mon = null;
     }
@@ -85,8 +92,7 @@ namespace GamepadMidi
 
     private void controllers_SelectedIndexChanged(object sender, EventArgs e)
     {
-      if (mon != null)
-        DisposeMonitor();
+      DisposeMonitor();
       if (controllers.SelectedItem is Controller c)
       {
         mon = new ControllerMonitor(c);
@@ -98,6 +104,10 @@ namespace GamepadMidi
         else if (c.Capabilities.SubType == XInput.DevSubType.DrumKit)
         {
           mon.OnStateChanged += drumTranslator.ControllerEventHandler;
+        }
+        else if (c.Capabilities.SubType == XInput.DevSubType.ProGuitar)
+        {
+          mon.OnStateChanged += proGuitarTranslator.ControllerEventHandler;
         }
         XInput.BatteryInformation xbi = default;
         XInput.XInputGetBatteryInformation(((Controller)controllers.SelectedItem).Index, XInput.BatteryDevType.Gamepad, ref xbi);

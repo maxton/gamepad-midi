@@ -18,9 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native\JoystickApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Translators\KeytarTranslator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Xinput.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Translators\ProGuitarTranslator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Native\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Translators\" />
   </ItemGroup>
 </Project>

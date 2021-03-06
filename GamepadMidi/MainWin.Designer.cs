@@ -111,9 +111,9 @@
       // 
       this.reloadButton.Location = new System.Drawing.Point(237, 5);
       this.reloadButton.Name = "reloadButton";
-      this.reloadButton.Size = new System.Drawing.Size(101, 23);
+      this.reloadButton.Size = new System.Drawing.Size(139, 23);
       this.reloadButton.TabIndex = 16;
-      this.reloadButton.Text = "Reload Devices";
+      this.reloadButton.Text = "Stop && Reload Devices";
       this.reloadButton.UseVisualStyleBackColor = true;
       this.reloadButton.Click += new System.EventHandler(this.reloadButton_Click);
       // 
@@ -144,6 +144,7 @@
       this.Name = "MainWin";
       this.ShowIcon = false;
       this.Text = "Gamepad to MIDI";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GamepadMidi_FormClosing);
       this.ResumeLayout(false);
       this.PerformLayout();
 

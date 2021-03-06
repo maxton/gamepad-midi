@@ -106,7 +106,8 @@ namespace LibPlasticInstrument
       UNK_16 = 16, 
       UNK_17 = 17,
       UNK_18 = 18,
-      ArcadePad = 19
+      ArcadePad = 19,
+      ProGuitar = 25
     }
 
     [StructLayout(LayoutKind.Sequential)]
